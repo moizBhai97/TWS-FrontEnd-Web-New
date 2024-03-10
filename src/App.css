@@ -1,38 +1,36 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+ /*
+::-webkit-scrollbar,
+::-webkit-scrollbar-horizontal {
+  height: 5px;
+  width: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-horizontal {
+  background: white;
+  box-shadow: inset 0 0 5px grey;
+}
+
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:horizontal {
+  background: linear-gradient(13deg, rgba(250,191,44,1) 14%, rgba(255,171,26,1) 64%);
+  border-radius: 10px;
+  transition: background 0.5s;
+}
+
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:horizontal:hover {
+  background: linear-gradient(13deg, rgba(255,171,26,1) 14%, rgba(250,191,44,1) 64%);
+}
+*/
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(250,191,44,1) white;
 }
