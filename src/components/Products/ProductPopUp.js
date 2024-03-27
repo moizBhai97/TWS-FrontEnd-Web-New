@@ -29,7 +29,7 @@ const ProductPopUp = ({ product, open, handleClose }) => {
                     <Grid item xs={12} sm={6}>
                         <CardMedia
                             component="img"
-                            sx={{ height: '100%', objectFit: 'cover', borderRadius: '10%' }}
+                            sx={{ height: '100%', objectFit: 'cover'}}
                             image={product.image}
                             alt={product.name}
                         />

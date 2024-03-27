@@ -66,7 +66,7 @@ const Navbar = () => {
           )}
           <Box sx={{ flexGrow: isMobile ? 1 : 0, display: 'flex'}}>
             <IconButton color="inherit" onClick={() => setIsLocationOpen(true)}>
-              <LocationOnIcon fontSize='large' />
+              <LocationOnIcon fontSize='large' color='secondary' />
             </IconButton>
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', ml: -1 }}>
               <Typography variant={isMobile ? 'body1' : 'h6'}>Deliver to</Typography>

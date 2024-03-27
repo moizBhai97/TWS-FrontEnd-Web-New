@@ -89,6 +89,12 @@ const Payment = () => {
         setAddress(address);
     }
 
+    const formatPhoneNumber = () => {
+        const cleaned = ('' + phoneNumber).replace(/\D/g, '');
+        const number = contryCode + cleaned;
+        return number;
+    };
+
     return (
         <Container maxWidth="lg" sx={{ mt: top / 8 + 2, padding: theme.spacing(3), backgroundColor: theme.palette.background.paper, borderRadius: theme.shape.borderRadius }}>
             <Grid container spacing={3}>
@@ -224,7 +230,7 @@ const Payment = () => {
                     </Card>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <PayCart />
+                    <PayCart phoneNumber = {formatPhoneNumber()} name = {name} address = {address} description = {description} />
                 </Grid>
             </Grid>
         </Container>

@@ -4,6 +4,8 @@ import { Box, Typography, Button, Grid, Card, CardMedia, CardContent, CardAction
 
 import { useNavigate } from 'react-router-dom';
 
+import { makePayment } from '../services/makePayment';
+
 const CartBox = styled(Card)(({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(1),
@@ -34,8 +36,9 @@ const QuantityBox = styled(Box)(({ theme }) => ({
     fontSize: theme.typography.h6.fontSize,
 }));
 
-const PayCart = () => {
+const PayCart = ({ phoneNumber, name, address, description}) => {
     const cartItems = useSelector((state) => state.cart.items);
+    const tax = useSelector((state) => state.cart.tax);
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -47,8 +50,36 @@ const PayCart = () => {
     }
 
     const subtotal = roundOff(cartItems.reduce((total, item) => total + item.price * item.quantity, 0));
+    const taxtotal = roundOff(subtotal + (subtotal * tax / 100));
     const deliveryCharges = 10;
-    const grandTotal = roundOff(subtotal + deliveryCharges);
+    const grandTotal = roundOff(taxtotal + deliveryCharges);
+
+    const makeOrder = () => {
+        const order = {
+            Customer_Name: name,
+            Customer_Address: address,
+            Customer_Phone: phoneNumber,
+            Items: cartItems.map(item => ({
+                Product: item._id,
+                Quantity: item.quantity,
+                Price: item.price,
+            })),
+            Total: subtotal,
+            Grand_Total: grandTotal,
+            GST: tax,
+            Grand_Total: grandTotal,
+            Ordered_From: 'Web',
+            Branch_Name: 'I-8 Markaz',
+            Comment: description || '',
+            Delivery_Charges: deliveryCharges,
+        };
+        
+        makePayment(order).then((response) => {
+            if (response.status === 200) {
+                navigate('/');
+            }
+        });
+    }
 
     return (
         <CartBox>
@@ -102,6 +133,10 @@ const PayCart = () => {
                             <Typography variant="h6" color="text.secondary">{subtotal}</Typography>
                         </Grid>
                         <Grid item container justifyContent="space-between">
+                                <Typography variant="h6">Total after {tax}% GST:</Typography>
+                                <Typography variant="h6" color="text.secondary">{taxtotal}</Typography>
+                            </Grid>
+                        <Grid item container justifyContent="space-between">
                             <Typography variant="h6">Delivery Charges:</Typography>
                             <Typography variant="h6" color="text.secondary">{deliveryCharges}</Typography>
                         </Grid>
@@ -110,7 +145,7 @@ const PayCart = () => {
                             <Typography variant="h6" color="text.secondary" fontWeight="bold">{grandTotal}</Typography>
                         </Grid>
                         <Grid>
-                            <Button variant="contained" color="primary" fullWidth onClick={() => { navigate('/payment') }}>
+                            <Button variant="contained" color="primary" fullWidth onClick={() => { makeOrder() }}>
                                 Checkout
                             </Button>
                         </Grid>
